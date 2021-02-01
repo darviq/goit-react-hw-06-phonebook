@@ -1,35 +1,30 @@
 import {v4 as uuidv4} from "uuid";
-
-const types = {
-    add: "ADD_CONCTACT",
-    addLocal: "ADD_LOCAL_CONCTACTS",
-    remove: "REMOVE_CONCTACT",
-};
+import {contacts} from "../actionTypes/actionTypes";
 
 export const addContact = data => {
     return {
-        type: types.add,
+        type: contacts.add,
         payload: data,
     };
 };
 
 export const addLocalContacts = data => {
     return {
-        type: types.addLocal,
+        type: contacts.addLocal,
         payload: data,
     };
 };
 
 export const removeContact = id => {
     return {
-        type: types.remove,
+        type: contacts.remove,
         payload: id,
     };
 };
 
 const contactsReducer = (state = [], {type, payload}) => {
     switch (type) {
-        case types.add:
+        case contacts.add:
             return (state = [
                 ...state,
                 {
@@ -39,10 +34,10 @@ const contactsReducer = (state = [], {type, payload}) => {
                 },
             ]);
 
-        case types.addLocal:
+        case contacts.addLocal:
             return (state = [...payload]);
 
-        case types.remove:
+        case contacts.remove:
             return (state = [...state.filter(contact => contact.id !== payload)]);
 
         default:

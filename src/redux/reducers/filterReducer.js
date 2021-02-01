@@ -1,17 +1,15 @@
-const types = {
-    change: "CHANGE_FILTER",
-};
+import {filter} from "../actionTypes/actionTypes";
 
 export const changeFilter = value => {
     return {
-        type: types.change,
+        type: filter.change,
         payload: value,
     };
 };
 
 const filterReducer = (state = "", {type, payload}) => {
     switch (type) {
-        case types.change:
+        case filter.change:
             return (state = payload);
 
         default:
