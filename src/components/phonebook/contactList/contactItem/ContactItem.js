@@ -37,11 +37,15 @@ const Li = transition.li`
 `;
 
 const ContactItem = ({name, number, id, removeContact}) => {
+    const removeContactHandler = e => {
+        removeContact(e.target.dataset.id);
+    };
+
     return (
         <>
             <p>{name}</p>
             <p>{number}</p>
-            <button type="button" data-id={id} onClick={removeContact}>
+            <button type="button" data-id={id} onClick={removeContactHandler}>
                 &#x2715;
             </button>
         </>

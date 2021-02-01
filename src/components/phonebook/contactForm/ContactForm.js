@@ -1,7 +1,9 @@
 import React, {useState} from "react";
+import {connect} from "react-redux";
+import {addContact} from "../../../redux/reducers/contactsReducer";
 import Form from "./ContactFormStyled";
 
-const ContactForm = ({addContact}) => {
+const ContactForm = ({contacts, contactExists, addContact}) => {
     const [state, setState] = useState({
         name: "",
         number: "",
@@ -17,8 +19,12 @@ const ContactForm = ({addContact}) => {
 
     const submitHandler = e => {
         e.preventDefault();
-        addContact({...state});
-        setState({name: "", number: ""});
+        if (contacts.find(contact => contact.name === state.name)) {
+            contactExists();
+        } else {
+            addContact({...state});
+            setState({name: "", number: ""});
+        }
     };
 
     return (
@@ -36,4 +42,10 @@ const ContactForm = ({addContact}) => {
     );
 };
 
-export default ContactForm;
+const mapDispatchToProps = dispatch => {
+    return {
+        addContact: data => dispatch(addContact(data)),
+    };
+};
+
+export default connect(null, mapDispatchToProps)(ContactForm);
