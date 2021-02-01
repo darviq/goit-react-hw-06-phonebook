@@ -31,8 +31,8 @@ const Div = transition.div`
     }
 `;
 
-const Notification = ({notif}) => (
-    <Div in={notif} timeout={250} unmountOnExit>
+const Notification = ({showNotification}) => (
+    <Div in={showNotification} timeout={250} unmountOnExit>
         Contact already exists!
     </Div>
 );

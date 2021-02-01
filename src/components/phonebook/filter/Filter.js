@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {connect} from "react-redux";
+import {useDispatch} from "react-redux";
 import styled from "styled-components";
 import {changeFilter} from "../../../redux/reducers/filterReducer";
 
@@ -19,14 +19,16 @@ const Div = styled.div`
     }
 `;
 
-const Filter = ({changeFilter}) => {
+const Filter = () => {
     const [state, setState] = useState({
         value: "",
     });
 
+    const dispatch = useDispatch();
+
     const inputHandler = e => {
         setState({value: e.target.value});
-        changeFilter(e.target.value);
+        dispatch(changeFilter(e.target.value));
     };
 
     return (
@@ -39,10 +41,4 @@ const Filter = ({changeFilter}) => {
     );
 };
 
-const mapDispatchToProps = dispatch => {
-    return {
-        changeFilter: value => dispatch(changeFilter(value)),
-    };
-};
-
-export default connect(null, mapDispatchToProps)(Filter);
+export default Filter;

@@ -1,3 +1,5 @@
+import {useDispatch} from "react-redux";
+import {removeContact} from "../../../../redux/reducers/contactsReducer";
 import transition from "styled-transition-group";
 
 const Li = transition.li`
@@ -36,9 +38,11 @@ const Li = transition.li`
     }
 `;
 
-const ContactItem = ({name, number, id, removeContact}) => {
+const ContactItem = ({name, number, id}) => {
+    const dispatch = useDispatch();
+
     const removeContactHandler = e => {
-        removeContact(e.target.dataset.id);
+        dispatch(removeContact(e.target.dataset.id));
     };
 
     return (

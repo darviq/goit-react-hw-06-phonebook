@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import {connect} from "react-redux";
+import {useSelector, useDispatch} from "react-redux";
 import ContactForm from "./contactForm/ContactForm";
 import Filter from "./filter/Filter";
 import ContactList from "./contactList/ContactList";
@@ -7,15 +7,18 @@ import Notification from "./notification/Notification";
 import {Div, H1} from "./PhonebookStyled";
 import {addLocalContacts} from "../../redux/reducers/contactsReducer";
 
-const Phonebook = ({contacts, addLocalContacts}) => {
+const Phonebook = () => {
     const [state, setState] = useState({
         showNotification: false,
     });
 
+    const contacts = useSelector(state => state.contacts.items);
+    const dispatch = useDispatch();
+
     useEffect(() => {
         const localSorageContacts = JSON.parse(localStorage.getItem("contacts"));
         if (localSorageContacts && localSorageContacts.length > 0) {
-            addLocalContacts([...localSorageContacts]);
+            dispatch(addLocalContacts([...localSorageContacts]));
         }
     }, []);
 
@@ -43,21 +46,9 @@ const Phonebook = ({contacts, addLocalContacts}) => {
                 </>
             )}
             <ContactList />
-            <Notification notif={state.showNotification} />
+            <Notification showNotification={state.showNotification} />
         </Div>
     );
 };
 
-const mapStateToProps = state => {
-    return {
-        contacts: state.contacts.items,
-    };
-};
-
-const mapDispatchToProps = dispatch => {
-    return {
-        addLocalContacts: data => dispatch(addLocalContacts(data)),
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Phonebook);
+export default Phonebook;

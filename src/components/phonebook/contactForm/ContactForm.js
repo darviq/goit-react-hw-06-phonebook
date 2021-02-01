@@ -1,13 +1,15 @@
 import React, {useState} from "react";
-import {connect} from "react-redux";
+import {useDispatch} from "react-redux";
 import {addContact} from "../../../redux/reducers/contactsReducer";
 import Form from "./ContactFormStyled";
 
-const ContactForm = ({contacts, contactExists, addContact}) => {
+const ContactForm = ({contacts, contactExists}) => {
     const [state, setState] = useState({
         name: "",
         number: "",
     });
+
+    const dispatch = useDispatch();
 
     const inputHandler = e => {
         const {name, value} = e.target;
@@ -22,7 +24,7 @@ const ContactForm = ({contacts, contactExists, addContact}) => {
         if (contacts.find(contact => contact.name === state.name)) {
             contactExists();
         } else {
-            addContact({...state});
+            dispatch(addContact({...state}));
             setState({name: "", number: ""});
         }
     };
@@ -42,10 +44,4 @@ const ContactForm = ({contacts, contactExists, addContact}) => {
     );
 };
 
-const mapDispatchToProps = dispatch => {
-    return {
-        addContact: data => dispatch(addContact(data)),
-    };
-};
-
-export default connect(null, mapDispatchToProps)(ContactForm);
+export default ContactForm;
